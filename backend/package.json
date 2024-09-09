@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "Books-store backend",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -12,8 +12,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
-    "mongoose": "^8.5.3",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
     "nodemon": "^3.1.4"
   }
 }

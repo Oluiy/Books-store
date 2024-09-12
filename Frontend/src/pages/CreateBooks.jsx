@@ -37,7 +37,32 @@ export const CreateBooks = () => {
       {loading ? (<Spinner />) : (<div className=""></div>)}
       <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
         <div className="my-4">
-          <label htmlFor="" className="text-4xl mr-4 text-gray-500">Title</label>
+          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <input type="text"
+          value={title}
+          
+          className="border border-gray-500 w-full" />
+        </div>
+        <div className="my-4">
+          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <input type="text"
+          value={author}
+          
+          className="border border-gray-500 w-full" />
+        </div>
+        <div className="my-4">
+          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <input type="text"
+          value={publishYear}
+          
+          className="border border-gray-500 w-full" />
+        </div>
+        <div className="my-4">
+          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <input type="text"
+          value={genre}
+          
+          className="border border-gray-500 w-full" />
         </div>
       </div>
     </div>

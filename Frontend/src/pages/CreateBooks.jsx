@@ -44,26 +44,27 @@ export const CreateBooks = () => {
           className="border border-gray-500 w-full" />
         </div>
         <div className="my-4">
-          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <label  className="text-4xl mr-4 text-gray-500">Author</label>
           <input type="text"
           value={author}
           
           className="border border-gray-500 w-full" />
         </div>
         <div className="my-4">
-          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <label  className="text-4xl mr-4 text-gray-500">Publishyear</label>
           <input type="text"
           value={publishYear}
           
           className="border border-gray-500 w-full" />
         </div>
         <div className="my-4">
-          <label  className="text-4xl mr-4 text-gray-500">Title</label>
+          <label  className="text-4xl mr-4 text-gray-500">Genre</label>
           <input type="text"
           value={genre}
           
           className="border border-gray-500 w-full" />
         </div>
+        <button type="submit" onClick={handleSaveBook}>Create Book</button>
       </div>
     </div>
   );

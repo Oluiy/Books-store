@@ -94,6 +94,7 @@ export const Home = () => {
           </tbody>
         </table>
       )}
+      <footer className="fixed bottom-[calc(20px+env(safe-area-inset-top))] left-[46.8%]">© Israel Akinboyewa</footer>
     </div>
   );
 };

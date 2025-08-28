@@ -27,7 +27,21 @@ export const Home = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl my-8">Books List</h1>
+        <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-12 h-8 bg-gradient-to-br from-black to-green-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">MERN</span>
+              </div>
+              <span className="font-heading font-semibold text-xl text-gray-900">
+                MERNSTACK
+              </span>
+            </Link>
+          </div>
+        <h1 className="inline-flex text-3xl my-8 items-center px-4 bg-green-500:hover">
+          <pre><span className="inline-flex items-center px-4 py-2 rounded-full text-lg font-medium bg-primary-100 text-primary-800 border border-primary-200">
+              📚📖 A Full-Stack <span className="text-green-700">Book store</span> application which uses MongoDB, Express, React and NodeJs.
+            </span></pre>
+           </h1>
         <Link to="/books/create">
           <MdOutlineAddBox className="text-sky-500 text-4xl" />
         </Link>
@@ -35,7 +49,7 @@ export const Home = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <table className="w-full border-separate border-spacing-2">
+        <table className="w-full border-separate border-spacing-2 ">
           <thead>
             <tr>
               <th className="border border-slate-600 rounded-[10px]"> No</th>
@@ -94,7 +108,9 @@ export const Home = () => {
           </tbody>
         </table>
       )}
-      <footer className="fixed bottom-[calc(20px+env(safe-area-inset-top))] left-[44%] text-[25px]">© Israel Akinboyewa</footer>
+      <footer className="fixed bottom-[calc(20px+env(safe-area-inset-top))] left-[44%] text-[25px]">
+        © Israel Akinboyewa
+      </footer>
     </div>
   );
 };

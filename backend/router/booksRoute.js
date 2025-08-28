@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 });
 
 // route to get all books
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const books = await Book.find({});
     return res.status(200).json({

@@ -32,7 +32,7 @@ export const ShowBook = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-max-fit p-4 ">
+        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-max p-4 text-gray-500 dark:text-gray-400 mt-2 text-sm  ">
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-600 ">Id:</span>
             <span>{book._id}</span>

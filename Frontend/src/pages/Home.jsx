@@ -6,6 +6,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox } from "react-icons/md";
 import { MdOutlineDeleteSweep } from "react-icons/md";
+import Page from "./darkpage";
 
 export const Home = () => {
   const [books, setBooks] = useState([]);

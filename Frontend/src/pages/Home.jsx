@@ -14,7 +14,7 @@ export const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3000/books")
+      .get("http://localhost:3000/books/all")
       .then((res) => {
         setBooks(res.data.data);
         setLoading(false);

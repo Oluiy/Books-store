@@ -5,49 +5,18 @@ import { Spinner } from "../components/spinner";
 import { useParams } from "react-router-dom";
 import { MdTitle } from "react-icons/md";
 
+
 export const ShowBook = () => {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-
-
-  useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:3000/Books/${id}`)
-    .then((res) => {
-      setBook(res.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      setLoading(false);
-    })
-  }, [])
-
-  return (
-    <div>
-      <BackButton />
-      <h1 className="text-4xl my-4">Show book details</h1>
-      {loading ? (
-        <Spinner />
-        ) : (
-          <div className='flex flex-col border-2 border-sky-500 rounded-xl w-fit'>
-            <div className='my-4'>
-              <span className="text-xl mr-5 text-gray-400">Id</span>
-              <span>{book._id}</span>
-            </div>
-          </div>
-        )}
-    </div>
-  )
-
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:3000/Books/${id}`)
       .then((response) => {
-        setBook(response.data);
+        setBook(response.data.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -63,7 +32,7 @@ export const ShowBook = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[400px] p-4 ">
+        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-max-fit p-4 ">
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-600 ">Id:</span>
             <span>{book._id}</span>
@@ -90,7 +59,7 @@ export const ShowBook = () => {
           </div>
           <div className="my-4">
             <span className="text-xl mr-4 text-gray-600 ">
-              Last update time
+              Last update time:
             </span>
             <span>{new Date(book.updatedAt).toString()}</span>
           </div>

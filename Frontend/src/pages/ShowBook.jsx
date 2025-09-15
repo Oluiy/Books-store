@@ -3,8 +3,7 @@ import axios from "axios";
 import { BackButton } from "../components/backButton";
 import { Spinner } from "../components/spinner";
 import { useParams } from "react-router-dom";
-import { MdTitle } from "react-icons/md";
-
+import { MdTitle, MdPerson, MdDateRange, MdCategory, MdSchedule, MdUpdate } from "react-icons/md";
 
 export const ShowBook = () => {
   const [book, setBook] = useState({});
@@ -26,45 +25,108 @@ export const ShowBook = () => {
   }, []);
 
   return (
-    <div className="p-4">
-      <BackButton />
-      <h1 className="text-3xl my-4">Show Book</h1>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-max p-4 text-gray-500 dark:text-gray-400 mt-2 text-sm  ">
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Id:</span>
-            <span>{book._id}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Title: </span>
-            <span>{book.title}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Author: </span>
-            <span>{book.author}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Publish-Year: </span>
-            <span>{book.publishYear}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Genre: </span>
-            <span>{book.genre}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">Create time: </span>
-            <span>{new Date(book.createdAt).toString()}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-600 ">
-              Last update time:
-            </span>
-            <span>{new Date(book.updatedAt).toString()}</span>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-sky-100 p-6">
+      <div className="max-w-4xl mx-auto">
+        <BackButton />
+        
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Book Details</h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-sky-500 mx-auto rounded-full"></div>
         </div>
-      )}
+
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <Spinner />
+          </div>
+        ) : (
+          <div className="bg-white rounded-3xl shadow-2xl p-8 border-t-4 border-gradient-to-r from-green-400 to-sky-400">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              
+              {/* Main Book Info */}
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-green-100 to-sky-100 p-6 rounded-2xl">
+                  <div className="flex items-center mb-3">
+                    <MdTitle className="text-2xl text-green-600 mr-3" />
+                    <span className="text-lg font-semibold text-gray-700">Title</span>
+                  </div>
+                  <p className="text-2xl font-bold text-gray-800">{book.title}</p>
+                </div>
+
+                <div className="bg-gradient-to-r from-sky-100 to-green-100 p-6 rounded-2xl">
+                  <div className="flex items-center mb-3">
+                    <MdPerson className="text-2xl text-sky-600 mr-3" />
+                    <span className="text-lg font-semibold text-gray-700">Author</span>
+                  </div>
+                  <p className="text-xl text-gray-800">{book.author}</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-yellow-50 p-4 rounded-xl border-l-4 border-yellow-400">
+                    <div className="flex items-center mb-2">
+                      <MdDateRange className="text-xl text-yellow-600 mr-2" />
+                      <span className="font-semibold text-gray-700">Publish Year</span>
+                    </div>
+                    <p className="text-lg text-gray-800">{book.publishYear}</p>
+                  </div>
+
+                  <div className="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-400">
+                    <div className="flex items-center mb-2">
+                      <MdCategory className="text-xl text-purple-600 mr-2" />
+                      <span className="font-semibold text-gray-700">Genre</span>
+                    </div>
+                    <p className="text-lg text-gray-800">{book.genre}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Metadata */}
+              <div className="space-y-6">
+                <div className="bg-gray-50 p-6 rounded-2xl">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">Database Information</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="flex items-center mb-2">
+                        <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Book ID</span>
+                      </div>
+                      <p className="text-sm text-gray-700 font-mono bg-gray-100 p-2 rounded break-all">{book._id}</p>
+                    </div>
+
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="flex items-center mb-2">
+                        <MdSchedule className="text-lg text-green-600 mr-2" />
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Created</span>
+                      </div>
+                      <p className="text-sm text-gray-700">{new Date(book.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}</p>
+                    </div>
+
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="flex items-center mb-2">
+                        <MdUpdate className="text-lg text-orange-600 mr-2" />
+                        <span className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Last Updated</span>
+                      </div>
+                      <p className="text-sm text-gray-700">{new Date(book.updatedAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

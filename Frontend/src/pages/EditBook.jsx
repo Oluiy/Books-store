@@ -3,18 +3,20 @@ import { BackButton } from "../components/backButton";
 import { Spinner } from "../components/spinner";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { MdTitle, MdPerson, MdDateRange, MdCategory, MdEdit } from "react-icons/md";
 
 export const EditBook = () => {
-  const [title, setTitle] = useState(" ");
-  const [author, setAuthor] = useState(" ");
-  const [publishYear, setPublishYear] = useState(" ");
-  const [genre, setGenre] = useState(" ");
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [publishYear, setPublishYear] = useState("");
+  const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const navigate = useNavigate(); 
   const {id} = useParams(); 
 
   useEffect(() => {
-    setLoading(true);
+    setInitialLoading(true);
     axios
       .get(`http://localhost:3000/books/${id}`)
       .then((res) => {
@@ -22,86 +24,149 @@ export const EditBook = () => {
         setGenre(res.data.genre);
         setPublishYear(res.data.publishYear);
         setTitle(res.data.title);
-        setLoading(false);
+        setInitialLoading(false);
       })
       .catch((error) => {
-        setLoading(false);
-        alert(`An error occured please check the console`);
+        setInitialLoading(false);
+        alert(`An error occurred while loading book data. Please check the console.`);
         console.log(error);
       });
-  }, [])
-  //data required to be entered;
+  }, [id]);
 
   const handleEditBook = () => {
+    if (!title || !author || !publishYear || !genre) {
+      alert('Please fill in all fields');
+      return;
+    }
+
     const data = {
       title,
       author,
       publishYear,
       genre,
     };
+    
     setLoading(true);
     axios
       .patch(`http://localhost:3000/books/${id}`, data)
       .then(() => {
         setLoading(false);
-       navigate('/')
+        navigate('/');
       })
       .catch((error) => {
         setLoading(false);
-        alert("error occured!!!");
+        alert("Error occurred while updating book!");
         console.log(error);
       });
   };
 
+  if (initialLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-sky-100 flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4">
-      <BackButton />
-      <h1 className="text-3xl my-8">Edit Book</h1>
-      {loading ? <Spinner /> : ''}
-      <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
-        <div className="my-4">
-          <label className="text-4xl mr-4 text-gray-500">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder={title}
-            className="border-2 rounded-xl border-gray-500 w-full px-4 py-2"
-          />
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-sky-100 p-6">
+      <div className="max-w-3xl mx-auto">
+        <BackButton />
+        
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Edit Book</h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-sky-500 mx-auto rounded-full"></div>
+          <p className="text-gray-600 mt-4">Update the book information below</p>
         </div>
-        <div className="my-4">
-          <label className="text-4xl mr-4 text-gray-500">Author</label>
-          <input
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            className="border-2 rounded-xl border-gray-500 w-full px-4 py-2"
-          />
+
+        {loading && (
+          <div className="flex justify-center items-center mb-8">
+            <Spinner />
+          </div>
+        )}
+
+        <div className="bg-white rounded-3xl shadow-2xl p-8 border-t-4 border-gradient-to-r from-green-400 to-sky-400">
+          <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleEditBook(); }}>
+            
+            {/* Title Field */}
+            <div className="space-y-2">
+              <label className="flex items-center text-lg font-semibold text-gray-700 mb-2">
+                <MdTitle className="text-xl text-green-600 mr-2" />
+                Book Title
+              </label>
+              <input 
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter the book title"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                required
+              />
+            </div>
+
+
+            <div className="space-y-2">
+              <label className="flex items-center text-lg font-semibold text-gray-700 mb-2">
+                <MdPerson className="text-xl text-sky-600 mr-2" />
+                Author
+              </label>
+              <input 
+                type="text"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="Enter the author's name"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="flex items-center text-lg font-semibold text-gray-700 mb-2">
+                  <MdDateRange className="text-xl text-yellow-600 mr-2" />
+                  Publish Year
+                </label>
+                <input 
+                  type="number"
+                  value={publishYear}
+                  onChange={(e) => setPublishYear(e.target.value)}
+                  placeholder="e.g., 2023"
+                  min="1000"
+                  max={new Date().getFullYear()}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="flex items-center text-lg font-semibold text-gray-700 mb-2">
+                  <MdCategory className="text-xl text-purple-600 mr-2" />
+                  Genre
+                </label>
+                <input 
+                  type="text"
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
+                  placeholder="e.g., Fiction, Mystery, Romance"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-6">
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                <MdEdit className="text-2xl" />
+                {loading ? 'Updating Book...' : 'Update Book'}
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="my-4">
-          <label className="text-4xl mr-4 text-gray-500">Publishyear</label>
-          <input
-            type="number"
-            value={publishYear}
-            onChange={(e) => setPublishYear(e.target.value)}
-            className="border-2 rounded-xl border-gray-500 w-full px-4 py-2"
-          />
-        </div>
-        <div className="my-4">
-          <label className="text-4xl mr-4 text-gray-500">Genre</label>
-          <input
-            type="text"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-            className="border-2 rounded-xl border-gray-500 w-full px-4 py-2"
-          />
-        </div>
-        <button
-          onClick={handleEditBook}
-          className="p-2 bg-sky-300 m-8 rounded-2xl"
-        >
-          Edit Book
-        </button>
       </div>
     </div>
   );

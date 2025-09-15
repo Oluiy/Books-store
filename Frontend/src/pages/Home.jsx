@@ -1,12 +1,12 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Spinner } from "../components/spinner";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
-import { MdOutlineAddBox } from "react-icons/md";
-import { MdOutlineDeleteSweep } from "react-icons/md";
-import Page from "./darkpage";
+import { MdOutlineAddBox, MdOutlineDeleteSweep } from "react-icons/md";
+
 
 export const Home = () => {
   const [books, setBooks] = useState([]);
@@ -25,92 +25,74 @@ export const Home = () => {
         setLoading(false);
       });
   }, []);
+
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-12 h-8 bg-gradient-to-br from-black to-green-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MERN</span>
-              </div>
-              <span className="font-heading font-semibold text-xl text-gray-900">
-                MERNSTACK
-              </span>
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-sky-200 flex flex-col">
+      {/* Header */}
+      {/* from-green-600 to-sky-500 py-6 from-green-600 to-sky-500 py-6 */}
+      <header className="w-full bg-purple-600 shadow-lg mb-8">  
+        <div className="container mx-auto flex justify-between items-center px-4">
+          <Link to="/" className="flex items-center space-x-3">
+            <div className="w-14 h-14 bg-white bg-opacity-20 rounded-full flex items-center justify-center shadow-md">
+              <span className="text-white font-extrabold text-2xl tracking-widest">MERN</span>
+            </div>
+            <span className="font-heading font-bold text-3xl text-white drop-shadow-lg">MERNSTACK</span>
+          </Link>
+          <div className="flex flex-col items-end">
+            <span className="text-white text-lg font-medium">📚📖 Mini Library</span>
+            <span className="text-white text-sm">MongoDB | Express | React | Node.js</span>
           </div>
-        <h1 className="inline-flex text-3xl my-8 items-center px-4 bg-green-500:hover">
-          <pre><span className="inline-flex items-center px-4 py-2 rounded-full text-lg font-medium bg-primary-100 text-primary-800 border border-primary-200">
-              📚📖 A Full-Stack <span className="text-green-700">Book store</span> application which uses MongoDB, Express, React and NodeJs.
-            </span></pre>
-           </h1>
-        <Link to="/books/create">
-          <MdOutlineAddBox className="text-sky-500 text-4xl" />
-        </Link>
-      </div>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <table className="w-full border-separate border-spacing-2 ">
-          <thead>
-            <tr>
-              <th className="border border-slate-600 rounded-[10px]"> No</th>
-              <th className="border border-slate-600 rounded-[10px]"> Title</th>
-              <th className="border border-slate-600 rounded-[10px] max-md:hidden">
-                {" "}
-                Author
-              </th>
-              <th className="border border-slate-600 rounded-[10px] max-md:hidden">
-                {" "}
-                Publish-Year
-              </th>
-              <th className="border border-slate-600 rounded-[10px] max-md:hidden">
-                {" "}
-                Genre
-              </th>
-              <th className="border border-slate-600 rounded-[10px]">
-                {" "}
-                operations
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+          <Link to="/books/create" className="ml-4">
+            <MdOutlineAddBox className="text-white text-5xl hover:text-yellow-300 transition" title="Add Book" />
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 container mx-auto px-4">
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <Spinner />
+          </div>
+        ) : books.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-64">
+            <span className="text-2xl text-gray-500">No books found.</span>
+            <Link to="/books/create" className="mt-4 px-6 py-2 bg-sky-500 text-white rounded-lg shadow hover:bg-sky-600 transition">Add your first book</Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-24">
             {books.map((book, index) => (
-              <tr key={book._id} className="h-8">
-                <td className="border border-slate-700 rounded-md text-center">
+              <div
+                key={book._id}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition p-6 flex flex-col justify-between border-t-4 border-green-400 relative group"
+              >
+                <div className="absolute -top-4 -left-4 bg-gradient-to-br from-green-400 to-sky-400 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold shadow-md">
                   {index + 1}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  {book.title}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
-                  {book.author}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
-                  {book.publishYear}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
-                  {book.genre}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  <div className="flex justify-center gap-x-4">
-                    <Link to={`/books/details/${book._id}`}>
-                      <BsInfoCircle className="text-2xl text-green-800" />
-                    </Link>
-                    <Link to={`/books/edit/${book._id}`}>
-                      <AiOutlineEdit className="text-yellow-600" />
-                    </Link>
-                    <Link to={`/books/delete/${book._id}`}>
-                      <MdOutlineDeleteSweep className="text-red-600" />
-                    </Link>
-                  </div>
-                </td>
-              </tr>
+                </div>
+                <h2 className="text-xl font-bold text-gray-800 mb-2 truncate" title={book.title}>{book.title}</h2>
+                <p className="text-gray-600 mb-1"><span className="font-semibold">Author:</span> {book.author}</p>
+                <p className="text-gray-600 mb-1"><span className="font-semibold">Year:</span> {book.publishYear}</p>
+                <p className="text-gray-600 mb-4"><span className="font-semibold">Genre:</span> {book.genre}</p>
+                <div className="flex justify-between mt-auto pt-2 border-t border-gray-100 gap-2">
+                  <Link to={`/books/details/${book._id}`} className="flex-1 flex justify-center items-center py-2 rounded-lg bg-green-100 hover:bg-green-200 transition group-hover:scale-105">
+                    <BsInfoCircle className="text-xl text-green-700" title="Details" />
+                  </Link>
+                  <Link to={`/books/edit/${book._id}`} className="flex-1 flex justify-center items-center py-2 rounded-lg bg-yellow-100 hover:bg-yellow-200 transition group-hover:scale-105">
+                    <AiOutlineEdit className="text-xl text-yellow-600" title="Edit" />
+                  </Link>
+                  <Link to={`/books/delete/${book._id}`} className="flex-1 flex justify-center items-center py-2 rounded-lg bg-red-100 hover:bg-red-200 transition group-hover:scale-105">
+                    <MdOutlineDeleteSweep className="text-xl text-red-600" title="Delete" />
+                  </Link>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      )}
-      <footer className="fixed bottom-[calc(20px+env(safe-area-inset-top))] left-[44%] text-[25px]">
-        © Israel Akinboyewa
+          </div>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="w-full py-4 bg-purple-600 text-white text-center text-lg font-semibold shadow-inner mt-8">
+        © {new Date().getFullYear()} Israel Akinboyewa &mdash; Mini Library
       </footer>
     </div>
   );

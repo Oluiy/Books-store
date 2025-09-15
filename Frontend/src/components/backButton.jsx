@@ -7,7 +7,7 @@ export const BackButton = ({ destination = '/'}) => {
     <div className='flex mb-6'>
         <Link 
           to={destination} 
-          className='bg-gradient-to-r from-green-600 to-sky-500 text-white px-6 py-3 rounded-full w-fit shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center gap-2 font-semibold'
+          className='bg-gradient-to-r from-purple-700 to-purple-500 text-white px-6 py-3 rounded-full w-fit shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center gap-2 font-semibold'
         >
           <BsArrowLeft className='text-xl'/>
           <span>Back</span>

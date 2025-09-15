@@ -17,7 +17,8 @@ const bookSchema = mongoose.Schema(
     genre: {
       type: String,
       required: true,
-    }
+    },
+    
   },
   { 
     timestamps: true,

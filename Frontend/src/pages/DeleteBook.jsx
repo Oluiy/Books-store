@@ -44,25 +44,25 @@ export const DeleteBook = () => {
 
   if (initialLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-white to-purple-50 flex items-center justify-center">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 p-6">
+  <div className="min-h-screen bg-gradient-to-br from-white to-purple-50 p-6">
       <div className="max-w-2xl mx-auto">
         <BackButton />
         
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
+            <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center">
               <MdWarning className="text-4xl text-white" />
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">Delete Book</h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-orange-500 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-purple-500 mx-auto rounded-full"></div>
           <p className="text-gray-600 mt-4">This action cannot be undone</p>
         </div>
 
@@ -72,9 +72,9 @@ export const DeleteBook = () => {
           </div>
         )}
 
-        <div className="bg-white rounded-3xl shadow-2xl border-2 border-red-200">
+        <div className="bg-white rounded-3xl shadow-2xl border-2 border-purple-200">
           {/* Warning Section */}
-          <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-t-3xl">
+          <div className="bg-purple-600 text-white p-6 rounded-t-3xl">
             <div className="flex items-center justify-center">
               <MdWarning className="text-3xl mr-3" />
               <h2 className="text-2xl font-bold">Confirmation Required</h2>
@@ -108,10 +108,10 @@ export const DeleteBook = () => {
               </div>
             </div>
 
-            <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg mb-6">
+            <div className="bg-purple-50 border-l-4 border-purple-400 p-4 rounded-lg mb-6">
               <div className="flex items-center">
-                <MdWarning className="text-red-400 text-xl mr-3" />
-                <p className="text-red-700 font-medium">
+                <MdWarning className="text-purple-400 text-xl mr-3" />
+                <p className="text-purple-700 font-medium">
                   Warning: This action is permanent and cannot be undone. The book will be completely removed from your library.
                 </p>
               </div>
@@ -131,7 +131,7 @@ export const DeleteBook = () => {
               <button
                 onClick={handleDeleteBook}
                 disabled={loading}
-                className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="flex-1 bg-purple-700 hover:bg-purple-900 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <MdDelete className="text-2xl" />
                 {loading ? "Deleting..." : "Delete Book"}

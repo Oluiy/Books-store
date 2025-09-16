@@ -4,7 +4,7 @@ import { Home } from './pages/Home';
 import { CreateBooks } from './pages/CreateBooks';
 import { ShowBook } from './pages/ShowBook';
 import { EditBook } from './pages/EditBook';
-import { DeleteBook } from './pages/deletebook';
+import { DeleteBook } from './pages/DeleteBook';
 
 
 

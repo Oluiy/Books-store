@@ -1,0 +1,13 @@
+{
+  "name": "books-store",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Books Store monorepo (backend + Frontend)",
+  "scripts": {
+    "start": "node backend/index.js",
+    "heroku-postbuild": "npm install --prefix backend && npm install --prefix Frontend && npm run build --prefix Frontend"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

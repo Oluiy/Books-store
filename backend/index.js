@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import { mongoDBURL } from "./server.js";
 import mongoose from "mongoose";
 import booksRoute from "./router/booksRoute.js";
@@ -6,9 +7,10 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
+dotenv.config();
 const app = express();
 const DB = process.env.DBURL || mongoDBURL;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -27,8 +29,8 @@ app.use(
   }),
 );
 
-// Health check
-app.get("/", (_req, res) => {
+// Health check (avoid shadowing SPA root in production)
+app.get("/health", (_req, res) => {
   return res.status(200).send("Books Store API running");
 });
 

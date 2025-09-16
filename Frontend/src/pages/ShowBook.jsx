@@ -13,7 +13,7 @@ export const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/Books/${id}`)
+      .get(`/books/${id}`)
       .then((response) => {
         setBook(response.data.data);
         setLoading(false);
@@ -22,7 +22,7 @@ export const ShowBook = () => {
         console.log(error);
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   return (
   <div className="min-h-screen bg-gradient-to-br from-white to-purple-50 p-6">

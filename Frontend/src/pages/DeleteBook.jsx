@@ -15,7 +15,7 @@ export const DeleteBook = () => {
   useEffect(() => {
     setInitialLoading(true);
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`/books/${id}`)
       .then((response) => {
         setBook(response.data.data);
         setInitialLoading(false);
@@ -30,7 +30,7 @@ export const DeleteBook = () => {
   const handleDeleteBook = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:3000/books/${id}`)
+      .delete(`/books/${id}`)
       .then(() => {
         setLoading(false);
         navigate("/");

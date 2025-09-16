@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     };
 
     const book = await Book.create(newBook);
-    return res.status(201).send(book);
+    return res.status(201).json({ data: book });
   } catch (error) {
     console.log(error);
   }
@@ -35,10 +35,7 @@ router.post("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   try {
     const books = await Book.find({});
-    return res.status(200).json({
-      count: books.length,
-      data: books,
-    });
+    return res.status(200).json({ count: books.length, data: books });
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
@@ -50,11 +47,10 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const book = await Book.findById(id);
-
-    return res.status(200).send({
-      count: book.length,
-      data: book,
-    });
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    return res.status(200).json({ data: book });
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -76,19 +72,15 @@ router.put("/:id", async (req, res) => {
 
     const { id } = req.params;
 
-    const update = await Book.findByIdAndUpdate(id, req.body);
+    const update = await Book.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!update) {
-      return res.status(404).send(`Book not found`);
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    return res.status(200).send(`Book Updated Successfully!`);
+    return res.status(200).json({ message: "Book updated successfully", data: update });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        message: `Internal Server Error`,
-      },
-    });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -97,13 +89,13 @@ router.patch("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await Book.findByIdAndUpdate(id, req.body);
+    const result = await Book.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!result) {
-      res.status(404).send(`Book not found`);
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    res.status(200).send(`Book Updated Succesfully!`);
+    return res.status(200).json({ message: "Book updated successfully", data: result });
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -117,10 +109,10 @@ router.delete("/:id", async (req, res) => {
     const deleteReq = await Book.findByIdAndDelete(id);
 
     if (!deleteReq) {
-      return res.status(404).send(`Book not found`);
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    return res.status(200).send(`Book deleted successfully`);
+    return res.status(200).json({ message: "Book deleted successfully" });
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -129,15 +121,10 @@ router.delete("/:id", async (req, res) => {
 router.get("/api/allbooks-title", async (req, res) => {
   try {
     const allBooks = await Book.find({});
-    return res.status(200).json({
-      count: allBooks.length,
-      data: allBooks,
-    });
+    return res.status(200).json({ count: allBooks.length, data: allBooks });
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .send({ message: `Could not fetch the books, check your network` });
+    return res.status(500).json({ message: "Could not fetch the books, check your network" });
   }
 });
 export default router;

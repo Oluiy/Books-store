@@ -18,12 +18,13 @@ export const EditBook = () => {
   useEffect(() => {
     setInitialLoading(true);
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`/books/${id}`)
       .then((res) => {
-        setAuthor(res.data.author);
-        setGenre(res.data.genre);
-        setPublishYear(res.data.publishYear);
-        setTitle(res.data.title);
+        const b = res.data?.data || {};
+        setAuthor(b.author || "");
+        setGenre(b.genre || "");
+        setPublishYear(b.publishYear || "");
+        setTitle(b.title || "");
         setInitialLoading(false);
       })
       .catch((error) => {
@@ -48,7 +49,7 @@ export const EditBook = () => {
     
     setLoading(true);
     axios
-      .patch(`http://localhost:3000/books/${id}`, data)
+      .patch(`/books/${id}`, data)
       .then(() => {
         setLoading(false);
         navigate('/');

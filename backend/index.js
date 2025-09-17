@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 dotenv.config();
 const app = express();
 const DB = process.env.DBURL || mongoDBURL;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -46,7 +46,18 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-//Connect my MongoDB database to my VS code
+// Validate required configuration
+if (!DB) {
+  const msg = "Missing DBURL. Set DBURL in environment variables.";
+  if (process.env.NODE_ENV === "production") {
+    console.error(msg);
+    process.exit(1);
+  } else {
+    console.warn(msg + " Using empty string will cause connection failure.");
+  }
+}
+
+// Connect to MongoDB and start server
 mongoose
   .connect(DB)
   .then(() => {

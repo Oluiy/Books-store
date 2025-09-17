@@ -12,8 +12,8 @@ router.post("/", async (req, res) => {
       !req.body.publishYear ||
       !req.body.genre
     ) {
-      res.status(401).send({
-        message: `send all required fields: title, author, publishYear, genre`,
+      return res.status(400).json({
+        message: `Send all required fields: title, author, publishYear, genre`,
       });
     }
 
@@ -65,8 +65,8 @@ router.put("/:id", async (req, res) => {
       !req.body.publishYear ||
       !req.body.genre
     ) {
-      res.status(401).send({
-        message: `send all required fields: title, author, publishYear, genre`,
+      return res.status(400).json({
+        message: `Send all required fields: title, author, publishYear, genre`,
       });
     }
 

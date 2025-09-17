@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { mongoDBURL } from "./server.js";
+
 import mongoose from "mongoose";
 import booksRoute from "./router/booksRoute.js";
 import cors from "cors";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 
 dotenv.config();
 const app = express();
-const DB = process.env.DBURL || mongoDBURL;
+const DBURI = process.env.DBURL;
 const PORT = process.env.PORT || 3000;
 
 // __dirname in ES Modules
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Validate required configuration
-if (!DB) {
+if (!DBURI) {
   const msg = "Missing DBURL. Set DBURL in environment variables.";
   if (process.env.NODE_ENV === "production") {
     console.error(msg);
@@ -59,7 +59,7 @@ if (!DB) {
 
 // Connect to MongoDB and start server
 mongoose
-  .connect(DB)
+  .connect(DBURI)
   .then(() => {
     console.log("app connected to database");
     app.listen(PORT, () => {

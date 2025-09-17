@@ -5,10 +5,9 @@
   "description": "Books Store monorepo (backend + Frontend)",
   "scripts": {
     "start": "node backend/index.js",
-    "heroku-postbuild": "npm install --prefix backend && NPM_CONFIG_PRODUCTION=false npm install --prefix Frontend && ROLLUP_USE_NODE_JS_IMPLEMENTATION=true npm run build --prefix Frontend"
+   "heroku-postbuild": "cd Frontend && npm install && npm run build"
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": "20.x"
   }
 }

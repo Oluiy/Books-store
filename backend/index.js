@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 dotenv.config();
 const app = express();
 const DBURI = process.env.DBURL;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);

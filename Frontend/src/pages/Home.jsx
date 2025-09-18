@@ -71,7 +71,7 @@ export const Home = () => {
         </div>
       </header>
 
-      <section className="w-full bg-purple-100 py-4 mb-8 shadow-inner">
+      <section className="w-full bg-purple-300 py-4 mb-8 shadow-inner">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Welcome to Your Mini Library
@@ -293,7 +293,7 @@ export const Home = () => {
 
       {/* Footer */}
       <footer className="w-full py-4 bg-purple-700 text-white text-center text-lg font-semibold shadow-inner mt-8">
-        © {new Date().getFullYear()} Israel Akinboyewa &mdash; Mini Library
+        © {new Date().getFullYear()} Israel Akinboyewa &mdash; Mini Library | Portfolio: <a href="https://israel-portfolio-2b0a9e5b3341.herokuapp.com/" className="underline"  style={{ textDecorationThickness: '3px' }} target="_blank">MyPortfolio</a>
       </footer>
     </div>
   );

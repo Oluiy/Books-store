@@ -5,7 +5,7 @@
   "description": "Books Store monorepo (backend + Frontend)",
   "scripts": {
     "start": "node backend/index.js",
-   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd Frontend && npm install && npm install vite && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && cd Frontend && npm install && npm install vite@4 && npm run build"
   },
   "engines": {
     "node": "20.x"

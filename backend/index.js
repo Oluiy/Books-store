@@ -58,14 +58,21 @@ if (!DBURI) {
 }
 
 // Connect to MongoDB and start server
+// MongoDB connection
+if (!DBURI) {
+  console.error('FATAL ERROR: DBURI environment variable is not set!');
+  process.exit(1);
+}
+
 mongoose
   .connect(DBURI)
   .then(() => {
-    console.log("app connected to database");
+    console.log('Successfully connected to MongoDB');
     app.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
+      console.log(`App is listening on port ${PORT}`);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error('Failed to connect to MongoDB:', error);
+    process.exit(1);
   });

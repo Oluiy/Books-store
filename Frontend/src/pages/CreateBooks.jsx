@@ -3,18 +3,19 @@ import { Spinner } from "../components/spinner";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../components/backButton";
 import axios from "axios";
-import { MdTitle, MdPerson, MdDateRange, MdCategory, MdSave } from "react-icons/md";
+import { MdTitle, MdPerson, MdDateRange, MdCategory, MdSave,  MdLink} from "react-icons/md";
 
 export const CreateBooks = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
   const [genre, setGenre] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   
   const handleSaveBook = () => {
-    if (!title || !author || !publishYear || !genre) {
+    if (!title || !author || !publishYear || !genre || !downloadUrl) {
       alert('Please fill in all fields');
       return;
     }
@@ -24,6 +25,7 @@ export const CreateBooks = () => {
       author,
       publishYear,
       genre,
+      downloadUrl
     };
 
     setLoading(true);
@@ -126,6 +128,20 @@ export const CreateBooks = () => {
                 />
               </div>
             </div>
+            <div className="space-y-2">
+                <label className="flex items-center text-lg font-semibold text-gray-700 mb-2">
+                  <MdLink className="text-xl text-purple-600 mr-2" />
+                  Link
+                </label>
+                <input 
+                  type="text"
+                  value={downloadUrl}
+                  onChange={(e) => setDownloadUrl(e.target.value)}
+                  placeholder="Link to download the book"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-2 focus:ring-purple-200 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                  required
+                />
+              </div>
 
             {/* Submit Button */}
             <div className="pt-6">

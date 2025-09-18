@@ -10,10 +10,11 @@ router.post("/", async (req, res) => {
       !req.body.title ||
       !req.body.author ||
       !req.body.publishYear ||
-      !req.body.genre
+      !req.body.genre ||
+      !req.body.downloadUrl
     ) {
       return res.status(400).json({
-        message: `Send all required fields: title, author, publishYear, genre`,
+        message: `Send all required fields: title, author, publishYear, genre, downloadUrl`,
       });
     }
 
@@ -22,6 +23,7 @@ router.post("/", async (req, res) => {
       author: req.body.author,
       publishYear: req.body.publishYear,
       genre: req.body.genre,
+      downloadUrl: req.body.downloadUrl,
     };
 
     const book = await Book.create(newBook);
@@ -29,6 +31,15 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+// In booksRoute.js
+router.get('/download/:id', async (req, res) => {
+  const book = await Book.findById(req.params.id);
+  if (!book || !book.filePath) {
+    return res.status(404).send('File not found');
+  }
+  res.download(book.filePath); // filePath is the path to the file on your server
 });
 
 // route to get all books
@@ -122,6 +133,19 @@ router.get("/api/allbooks-title", async (req, res) => {
   try {
     const allBooks = await Book.find({});
     return res.status(200).json({ count: allBooks.length, data: allBooks });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Could not fetch the books, check your network" });
+  }
+});
+router.get("/api/books-genre/:genre", async (req, res) => {
+  try {
+    const { genre } = req.params;
+    const booksByGenre = await Book.find({ genre: genre });
+    if (booksByGenre.length === 0) {
+      return res.status(404).json({ message: "No books found for the specified genre" });
+    }
+    return res.status(200).json({ count: booksByGenre.length, data: booksByGenre });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Could not fetch the books, check your network" });

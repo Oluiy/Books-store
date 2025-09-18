@@ -128,8 +128,8 @@ export const ShowBook = () => {
               <a
                 href={book.downloadUrl || '#'}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-purple-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-purple-800 transition text-lg"
+                rel="link"
+                className="inline-block bg-purple-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-purple-800 transition text-lg w-6"
                 download
               >
                 Download Book

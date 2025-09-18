@@ -18,6 +18,10 @@ const bookSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    downloadUrl: {
+      type: String,
+      required: true,
+    },
   },
   { 
     timestamps: true,

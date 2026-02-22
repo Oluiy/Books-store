@@ -68,11 +68,16 @@ mongoose
   .connect(DBURI)
   .then(() => {
     console.log('Successfully connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`App is listening on port ${PORT}`);
-    });
+    // Only verify we can connect, but let Vercel handle the listening if in production
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT, () => {
+        console.log(`App is listening on port ${PORT}`);
+      });
+    }
   })
   .catch((error) => {
     console.error('Failed to connect to MongoDB:', error);
     process.exit(1);
   });
+
+export default app;

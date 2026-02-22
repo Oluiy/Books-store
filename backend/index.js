@@ -36,15 +36,11 @@ app.get("/health", (_req, res) => {
 
 app.use("/books", booksRoute);
 
-// Serve frontend in production
-if (process.env.NODE_ENV === "production") {
-  const frontendDistPath = path.resolve(__dirname, "../Frontend/dist");
-  app.use(express.static(frontendDistPath));
-  // SPA fallback
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendDistPath, "index.html"));
-  });
-}
+// Removed serving frontend in production for separate deployment
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to Books Store API");
+});
+
 
 // Validate required configuration
 if (!DBURI) {
